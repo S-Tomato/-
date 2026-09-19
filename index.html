@@ -3,71 +3,265 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>我的图片相册</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>年级会在场证明</title>
+
   <style>
-    * { box-sizing: border-box; }
-    body {
+    * {
       margin: 0;
-      padding: 24px;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont,
+        "Segoe UI", "Microsoft YaHei", sans-serif;
       background: #f5f5f5;
-      font-family: Arial, sans-serif;
-      color: #222;
+      color: #333;
+      min-height: 100vh;
+      padding: 30px 20px;
     }
-    h1 { text-align: center; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    header h1 {
+      font-size: 32px;
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+    }
+
+    header p {
+      color: #888;
+      font-size: 15px;
+    }
+
     .gallery {
-      max-width: 1000px;
-      margin: 24px auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
+      grid-template-columns:
+        repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
     }
-    .gallery img {
+
+    .photo-card {
+      background: white;
+      padding: 10px;
+      border-radius: 14px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+      transition: transform 0.25s, box-shadow 0.25s;
+      overflow: hidden;
+    }
+
+    .photo-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .photo-card img {
+      display: block;
       width: 100%;
       height: 260px;
       object-fit: cover;
-      border-radius: 12px;
-      background: #ddd;
-      cursor: pointer;
+      border-radius: 9px;
+      cursor: zoom-in;
+      background: #eee;
     }
-    .gallery img:hover { opacity: .9; }
-    #viewer {
+
+    .photo-title {
+      text-align: center;
+      padding: 13px 5px 5px;
+      font-size: 15px;
+      color: #555;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    /* 图片放大预览 */
+    .viewer {
       display: none;
       position: fixed;
       inset: 0;
-      background: #000e;
+      z-index: 999;
+      background: rgba(0, 0, 0, 0.92);
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 55px 20px;
     }
-    #viewer img {
-      max-width: 95%;
-      max-height: 90vh;
+
+    .viewer.active {
+      display: flex;
+    }
+
+    .viewer img {
+      max-width: 100%;
+      max-height: 85vh;
       object-fit: contain;
+      border-radius: 5px;
+    }
+
+    .close {
+      position: absolute;
+      top: 18px;
+      right: 25px;
+      color: white;
+      font-size: 38px;
+      cursor: pointer;
+      line-height: 1;
+      border: none;
+      background: transparent;
+    }
+
+    .close:hover {
+      color: #ccc;
+    }
+
+    .photo-count {
+      text-align: center;
+      margin-top: 20px;
+      color: #888;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 20px 14px;
+      }
+
+      header h1 {
+        font-size: 26px;
+      }
+
+      .gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .photo-card {
+        padding: 7px;
+      }
+
+      .photo-card img {
+        height: 180px;
+      }
+
+      .photo-title {
+        font-size: 13px;
+      }
     }
   </style>
 </head>
-<body>
-  <h1>我的图片相册</h1>
-  <p style="text-align:center">欢迎浏览我的图片合集</p>
 
-  <div class="gallery">
-    <img src="photo1.jpg" alt="照片1">
-    <img src="photo2.jpg" alt="照片2">
-    <img src="photo3.jpg" alt="照片3">
+<body>
+
+  <div class="container">
+
+    <header>
+      <h1></h1>
+      <p>记录美好，珍藏每一个瞬间</p>
+    </header>
+
+    <main>
+      <div class="gallery">
+
+        <!-- 第一张图片 -->
+        <div class="photo-card">
+          <img src="photo1.jpg" alt="照片1">
+          <div class="photo-title">照片一</div>
+        </div>
+
+        <!-- 第二张图片 -->
+        <div class="photo-card">
+          <img src="photo2.jpg" alt="照片2">
+          <div class="photo-title">照片二</div>
+        </div>
+
+        <!-- 第三张图片 -->
+        <div class="photo-card">
+          <img src="photo3.jpg" alt="照片3">
+          <div class="photo-title">照片三</div>
+        </div>
+
+        <!-- 第四张图片 -->
+        <div class="photo-card">
+          <img src="photo4.jpg" alt="照片4">
+          <div class="photo-title">照片四</div>
+        </div>
+
+      </div>
+
+      <div class="photo-count">
+        共 4 张照片 · 点击图片查看大图
+      </div>
+    </main>
+
+    <footer>
+      <p>© 我的专属相册</p>
+    </footer>
+
   </div>
 
-  <div id="viewer" onclick="this.style.display='none'">
-    <img id="large" alt="大图">
+  <!-- 图片放大查看窗口 -->
+  <div class="viewer" id="viewer">
+
+    <button class="close" id="closeBtn"
+      aria-label="关闭图片预览">&times;</button>
+
+    <img id="largeImage" src="" alt="图片预览">
+
   </div>
 
   <script>
-    document.querySelectorAll(".gallery img").forEach(img => {
-      img.onclick = () => {
-        document.getElementById("large").src = img.src;
-        document.getElementById("viewer").style.display = "flex";
-      };
+    const viewer = document.getElementById("viewer");
+    const largeImage = document.getElementById("largeImage");
+    const closeBtn = document.getElementById("closeBtn");
+
+    // 点击缩略图，打开大图
+    document.querySelectorAll(".gallery img")
+      .forEach(function (img) {
+        img.addEventListener("click", function () {
+          largeImage.src = img.src;
+          largeImage.alt = img.alt;
+          viewer.classList.add("active");
+          document.body.style.overflow = "hidden";
+        });
+      });
+
+    // 关闭图片预览
+    function closeViewer() {
+      viewer.classList.remove("active");
+      largeImage.src = "";
+      document.body.style.overflow = "";
+    }
+
+    closeBtn.addEventListener("click", closeViewer);
+
+    // 点击黑色背景关闭
+    viewer.addEventListener("click", function (event) {
+      if (event.target === viewer) {
+        closeViewer();
+      }
+    });
+
+    // 按 ESC 键关闭
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        closeViewer();
+      }
     });
   </script>
+
 </body>
 </html>
